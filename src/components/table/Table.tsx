@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { usePollingRequest } from '../../hooks/usePollingRequest'
+import { getFixedNumber } from '../../helpers/getFixedNumber'
 
 import './table.scss'
 import clsx from 'clsx'
 
 export const Table = () => {
     const [error, setError] = useState<Error>()
-    const [delay, setDelay] = useState<number | null>(3000)
+    const [delay, setDelay] = useState<number | null>(2000)
 
     const firstRates = usePollingRequest(
         'first',
@@ -64,55 +65,52 @@ export const Table = () => {
                 <tr>
                     <td className='table__body-item'>RUB/CUPCAKE</td>
                     {renderTableValues([
-                        Number(firstRates.RUB.toFixed(3)),
-                        Number(secondRates?.RUB?.toFixed(3)),
-                        Number(thirdRates?.RUB?.toFixed(3)),
+                        getFixedNumber(firstRates.RUB),
+                        getFixedNumber(secondRates.RUB),
+                        getFixedNumber(thirdRates.RUB),
                     ])}
                 </tr>
                 <tr>
                     <td className='table__body-item'>USD/CUPCAKE</td>
                     {renderTableValues([
-                        Number(firstRates?.USD?.toFixed(3)),
-                        Number(secondRates?.USD?.toFixed(3)),
-                        Number(thirdRates?.USD?.toFixed(3)),
+                        getFixedNumber(firstRates.USD),
+                        getFixedNumber(secondRates.USD),
+                        getFixedNumber(thirdRates.USD),
                     ])}
                 </tr>
                 <tr>
                     <td className='table__body-item'>EUR/CUPCAKE</td>
                     {renderTableValues([
-                        Number(firstRates?.EUR?.toFixed(3)),
-                        Number(secondRates?.EUR?.toFixed(3)),
-                        Number(thirdRates?.EUR?.toFixed(3)),
+                        getFixedNumber(firstRates.EUR),
+                        getFixedNumber(secondRates.EUR),
+                        getFixedNumber(thirdRates.EUR),
                     ])}
                 </tr>
                 <tr>
                     <td className='table__body-item'>RUB/USD</td>
                     {renderTableValues([
-                        Number((firstRates?.RUB / firstRates?.USD).toFixed(3)),
-                        Number(
-                            (secondRates?.RUB / secondRates?.USD).toFixed(3)
-                        ),
-                        Number((thirdRates?.RUB / thirdRates?.USD).toFixed(3)),
+                        getFixedNumber(firstRates.RUB / firstRates.USD),
+
+                        getFixedNumber(secondRates.RUB / secondRates.USD),
+                        getFixedNumber(thirdRates.RUB / thirdRates.USD),
                     ])}
                 </tr>
                 <tr>
                     <td className='table__body-item'>RUB/EUR</td>
                     {renderTableValues([
-                        Number((firstRates?.RUB / firstRates?.EUR).toFixed(3)),
-                        Number(
-                            (secondRates?.RUB / secondRates?.EUR).toFixed(3)
-                        ),
-                        Number((thirdRates?.RUB / thirdRates?.EUR).toFixed(3)),
+                        getFixedNumber(firstRates.RUB / firstRates.EUR),
+
+                        getFixedNumber(secondRates.RUB / secondRates.EUR),
+                        getFixedNumber(thirdRates.RUB / thirdRates.EUR),
                     ])}
                 </tr>
                 <tr>
                     <td className='table__body-item'>EUR/RUB</td>
                     {renderTableValues([
-                        Number((firstRates?.EUR / firstRates?.RUB).toFixed(3)),
-                        Number(
-                            (secondRates?.EUR / secondRates?.RUB).toFixed(3)
-                        ),
-                        Number((thirdRates?.EUR / thirdRates?.RUB).toFixed(3)),
+                        getFixedNumber(firstRates.EUR / firstRates.RUB),
+
+                        getFixedNumber(secondRates.EUR / secondRates.RUB),
+                        getFixedNumber(thirdRates.EUR / thirdRates.RUB),
                     ])}
                 </tr>
             </tbody>
