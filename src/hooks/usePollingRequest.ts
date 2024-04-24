@@ -1,17 +1,30 @@
 import { useEffect, useState } from 'react'
 import { getRates, IRates, IRatesDto } from '../api/api'
 
+const initialRates: IRates = {
+    RUB: 0,
+    USD: 0,
+    EUR: 0,
+}
+
 export const usePollingRequest = (
     url: string,
     urlPoll: string,
-    delay: number = 3000
-): IRates | undefined => {
-    const [rates, setRates] = useState<IRates>()
+    setError: (error: Error) => void,
+    delay: number | null,
+    setDelay: (newDelay: number | null) => void
+): IRates => {
+    const [rates, setRates] = useState<IRates>(initialRates)
 
     const getPoll = (urlPoll: string) => {
-        getRates(urlPoll).then((res: IRatesDto) => {
-            setRates(res.rates)
-        })
+        getRates(urlPoll)
+            .then((res: IRatesDto) => {
+                setRates(res.rates)
+            })
+            .catch((error: Error) => {
+                setDelay(null)
+                setError(error)
+            })
     }
 
     useEffect(() => {
@@ -19,12 +32,14 @@ export const usePollingRequest = (
     }, [url])
 
     useEffect(() => {
-        const intervalId = setInterval(() => getPoll(urlPoll), delay)
+        if (delay !== null) {
+            const intervalId = setInterval(() => getPoll(urlPoll), delay)
 
-        return () => {
-            clearInterval(intervalId)
+            return () => {
+                clearInterval(intervalId)
+            }
         }
-    }, [urlPoll])
+    }, [urlPoll, delay])
 
     return rates
 }

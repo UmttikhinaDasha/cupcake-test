@@ -5,9 +5,30 @@ import './table.scss'
 import clsx from 'clsx'
 
 export const Table = () => {
-    const firstRates = usePollingRequest('first', 'first/poll')
-    const secondRates = usePollingRequest('second', 'second/poll')
-    const thirdRates = usePollingRequest('third', 'third/poll')
+    const [error, setError] = useState<Error>()
+    const [delay, setDelay] = useState<number | null>(3000)
+
+    const firstRates = usePollingRequest(
+        'first',
+        'first/poll',
+        setError,
+        delay,
+        setDelay
+    )
+    const secondRates = usePollingRequest(
+        'second',
+        'second/poll',
+        setError,
+        delay,
+        setDelay
+    )
+    const thirdRates = usePollingRequest(
+        'third',
+        'third/poll',
+        setError,
+        delay,
+        setDelay
+    )
 
     const renderTableValues = (items: number[]) => {
         const minValue = Math.min.apply(null, items)
@@ -22,6 +43,10 @@ export const Table = () => {
                 {item}
             </td>
         ))
+    }
+
+    if (error?.message) {
+        return <div>{error.message}</div>
     }
 
     return (
