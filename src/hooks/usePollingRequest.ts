@@ -7,6 +7,16 @@ const initialRates: IRates = {
     EUR: 0,
 }
 
+/**
+ * @param url For the first request to the server.
+ * @param urlPoll To receive new data from the server.
+ * @param setError Function to receive the error object.
+ * @param delay Delay between requests to the server.
+ * @param setDelay Function for setting a new delay value.
+ *                 Needed to abort requests when an error is received.
+ *
+ * @returns rates - Received data.
+ */
 export const usePollingRequest = (
     url: string,
     urlPoll: string,
@@ -28,12 +38,7 @@ export const usePollingRequest = (
     }
 
     useEffect(() => {
-        getRates(url)
-            .then((res: IRatesDto) => setRates(res.rates))
-            .catch((error: Error) => {
-                setDelay(null)
-                setError(error)
-            })
+        getPoll(url)
     }, [url])
 
     useEffect(() => {
