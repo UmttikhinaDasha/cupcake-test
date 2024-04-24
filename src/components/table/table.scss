@@ -1,0 +1,28 @@
+.table {
+    border-collapse: collapse;
+    border: 2px solid rgb(140 140 140);
+    background-color: rgb(213 213 213 / 14%);
+    font-size: 25px;
+    letter-spacing: 0.5px;
+
+    transition: all 1s ease-out;
+
+    &__head-item {
+        font-weight: inherit;
+        padding: 20px;
+    }
+
+    &__body-item {
+        min-width: 160px;
+        padding: 10px 20px;
+    }
+
+    &__body-item_active {
+        background-color: rgb(119, 158, 230);
+    }
+
+    &__head-item,
+    &__body-item {
+        border: 3px solid rgb(140 140 140);
+    }
+}
