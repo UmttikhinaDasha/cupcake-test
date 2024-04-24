@@ -28,7 +28,12 @@ export const usePollingRequest = (
     }
 
     useEffect(() => {
-        getRates(url).then((res: IRatesDto) => setRates(res.rates))
+        getRates(url)
+            .then((res: IRatesDto) => setRates(res.rates))
+            .catch((error: Error) => {
+                setDelay(null)
+                setError(error)
+            })
     }, [url])
 
     useEffect(() => {
